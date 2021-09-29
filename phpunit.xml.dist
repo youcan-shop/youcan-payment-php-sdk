@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="all">
+            <directory suffix="Test.php">tests/</directory>
+        </testsuite>
+
+        <testsuite name="endpoints">
+            <directory suffix="Test.php">./tests/API/Endpoints/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <ini name="max_execution_time" value="0"/>
+    </php>
+</phpunit>
