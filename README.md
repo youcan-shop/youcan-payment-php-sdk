@@ -6,6 +6,10 @@ This package allows the developer to interact easily with the YouCan Pay API.
 
 ## Basic Usage
 
+```bash
+composer install youcanshop/payment-sdk
+```
+
 ```php
 use YouCan\Pay\YouCanPay;
 
