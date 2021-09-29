@@ -37,6 +37,7 @@ class CurlHTTPAdapter extends HTTPAdapter
     {
         $curl = curl_init(sprintf($this->getBaseUrl(), $endpoint));
         $headers["Content-Type"] = "application/json";
+        $headers["Accept"] = "application/json";
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->parseHeaders($headers));

@@ -21,7 +21,8 @@ class Guzzle67HTTPAdapter extends HTTPAdapter
             'base_uri'                  => $this->getBaseUrl(),
             RequestOptions::HTTP_ERRORS => false,
             RequestOptions::HEADERS     => [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
             ]
         ]));
     }
