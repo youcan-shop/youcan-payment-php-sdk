@@ -18,7 +18,7 @@ abstract class HTTPAdapter
     protected function getBaseUrl(): string
     {
         // Select proper environment
-        $baseURL = getenv('YOUCAN_PAY_URL') ?? self::BASE_APP_URL;
+        $baseURL = getenv('YOUCAN_PAY_URL') ?: self::BASE_APP_URL;
 
         // Check sandbox mode
         $baseURL = sprintf("%s%s", $baseURL, $this->isSandboxMode ? 'sandbox/api/' : 'api/');
