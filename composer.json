@@ -7,6 +7,7 @@
       "email": "younes.rafie@gmail.com"
     }
   ],
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "YouCan\\Pay\\": "src/"
