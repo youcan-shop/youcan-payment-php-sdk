@@ -12,9 +12,9 @@ class InvalidResponseException extends Exception
     /** @var string */
     private $responseBody;
 
-    public function __construct(int $responseStatus, string $responseBody)
+    public function __construct(int $responseStatus, string $responseBody, string $message = null)
     {
-        parent::__construct("invalid response from YouCan Pay API");
+        parent::__construct($message ?: "invalid response from YouCan Pay API");
 
         $this->responseStatus = $responseStatus;
         $this->responseBody = $responseBody;

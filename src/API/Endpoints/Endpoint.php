@@ -7,7 +7,7 @@ use YouCan\Pay\API\APIServiceInterface;
 
 abstract class Endpoint
 {
-    /** @var \YouCan\Pay\API\APIServiceInterface */
+    /** @var APIServiceInterface */
     protected $apiService;
 
     public function __construct(APIServiceInterface $apiService)
