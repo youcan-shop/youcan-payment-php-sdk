@@ -1,8 +1,13 @@
-# YouCan Pay SDK
+<p align="center"><a href="https://pay.youcan.shop" target="_blank"><img src="https://pay.youcan.shop/images/ycpay-logo.svg" width="400"></a></p>
 
-[![tests](https://github.com/NextmediaMa/youcan-payment-php-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/NextmediaMa/youcan-payment-php-sdk/actions/workflows/tests.yml)
+<p align="center">
+<a href="https://pay.youcan.shop"><img src="https://github.com/NextmediaMa/youcan-payment-php-sdk/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/youcanpay/payment-sdk" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/youcanpay/payment-sdk" alt="Latest Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/youcanpay/payment-sdk" alt="License"></a>
+</p>
 
-This package allows the developer to interact easily with the YouCan Pay API.
+This package allows the developer to interact easily with the [YouCan Pay API](https://pay.youcan.shop/docs).
 
 ## Basic Usage
 
