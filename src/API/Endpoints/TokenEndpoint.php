@@ -2,7 +2,6 @@
 
 namespace YouCan\Pay\API\Endpoints;
 
-use Exception;
 use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Exceptions\ValidationException;
@@ -18,6 +17,8 @@ class TokenEndpoint extends Endpoint
         string $amount,
         string $currency,
         string $customerIP,
+        string $successUrl = null,
+        string $errorUrl = null,
         array $customerInfo = []
     ): Token
     {
@@ -28,6 +29,8 @@ class TokenEndpoint extends Endpoint
             'amount'      => $amount,
             'currency'    => $currency,
             'order_id'    => $orderId,
+            'success_url' => $successUrl,
+            'error_url'   => $errorUrl,
             'customer_ip' => $customerIP,
             'customer'    => $customerInfo
         ]);
