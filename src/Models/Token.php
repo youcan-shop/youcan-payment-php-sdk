@@ -3,6 +3,7 @@
 namespace YouCan\Pay\Models;
 
 use InvalidArgumentException;
+use YouCan\Pay\API\HTTPAdapter\HTTPAdapter;
 
 class Token
 {
@@ -40,5 +41,10 @@ class Token
         }
 
         return new self($attributes['id'], $attributes['transaction_id']);
+    }
+
+    public function getPaymentURL(): string
+    {
+        return sprintf("%spayment-form/%s", HTTPAdapter::BASE_APP_URL, $this->getId());
     }
 }
