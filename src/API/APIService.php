@@ -8,7 +8,7 @@ use YouCan\Pay\API\HTTPAdapter\HTTPAdapterPicker;
 
 final class APIService implements APIServiceInterface
 {
-    private static $isSandboxMode = false;
+    public static $isSandboxMode = false;
 
     /** @var HTTPAdapter */
     private $httpAdapter;
