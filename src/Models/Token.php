@@ -3,6 +3,7 @@
 namespace YouCan\Pay\Models;
 
 use InvalidArgumentException;
+use YouCan\Pay\API\APIService;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapter;
 
 class Token
@@ -45,6 +46,6 @@ class Token
 
     public function getPaymentURL(): string
     {
-        return sprintf("%spayment-form/%s", HTTPAdapter::BASE_APP_URL, $this->getId());
+        return sprintf("%spayment-form/%s", HTTPAdapter::BASE_APP_URL . (APIService::$isSandboxMode ? 'sandbox/' : ''), $this->getId());
     }
 }
