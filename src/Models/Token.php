@@ -44,8 +44,8 @@ class Token
         return new self($attributes['id'], $attributes['transaction_id']);
     }
 
-    public function getPaymentURL(): string
+    public function getPaymentURL($lang = 'en'): string
     {
-        return sprintf("%spayment-form/%s", HTTPAdapter::BASE_APP_URL . (APIService::$isSandboxMode ? 'sandbox/' : ''), $this->getId());
+        return sprintf("%spayment-form/%s?lang=%s", HTTPAdapter::BASE_APP_URL . (APIService::$isSandboxMode ? 'sandbox/' : ''), $this->getId(), $lang);
     }
 }
