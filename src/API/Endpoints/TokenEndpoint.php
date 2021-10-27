@@ -82,5 +82,11 @@ class TokenEndpoint extends Endpoint
                 'internal error from server. Support has been notified. Please try again!'
             );
         }
+
+        throw new InvalidResponseException(
+            $response->getStatusCode(),
+            json_encode($response->getResponse()),
+            'not supported status code from the server.'
+        );
     }
 }
