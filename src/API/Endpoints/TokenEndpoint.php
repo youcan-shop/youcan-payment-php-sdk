@@ -61,6 +61,8 @@ class TokenEndpoint extends Endpoint
                     'missing token in response. Please try again or contact support'
                 );
             }
+
+            return;
         }
 
         if ($response->getStatusCode() === 422) {
