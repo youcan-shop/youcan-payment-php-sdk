@@ -34,9 +34,9 @@ You can specify which environment when initializing `YouCanPay` instance
 
 ```php
 use YouCan\Pay\YouCanPay;
- 
-$youCanPay = YouCanPay::instance()->useKeys('my-private-key', 'my-public-key');
 
 // enable sandbox mode
 YouCanPay::setIsSandboxMode(true);
+ 
+$youCanPay = YouCanPay::instance()->useKeys('my-private-key', 'my-public-key');
 ```
