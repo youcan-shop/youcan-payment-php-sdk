@@ -14,14 +14,17 @@ class TransactionEndpointTest extends BaseTestCase
         $response = new Response(
             200,
             [
-                "id"         => "123",
-                "order_id"   => "123",
-                "status"     => 1,
-                "amount"     => "20.00",
-                "currency"   => "USD",
-                "created_at" => "2021-08-08 10:00:00"
+                "id"            => "123",
+                "order_id"      => "123",
+                "status"        => 1,
+                "amount"        => "20.00",
+                "currency"      => "USD",
+                "base_amount"   => null,
+                "base_currency" => null,
+                "created_at"    => "2021-08-08 10:00:00"
             ]
         );
+
         $fakeAPIService = new FakeAPIService($response);
 
         $transactionEndpoint = new TransactionEndpoint($fakeAPIService);
@@ -55,20 +58,24 @@ class TransactionEndpointTest extends BaseTestCase
             200,
             [
                 [
-                    "id"         => "123",
-                    "order_id"   => "123",
-                    "status"     => 1,
-                    "amount"     => "20.00",
-                    "currency"   => "USD",
-                    "created_at" => "2021-08-08 10:00:00"
+                    "id"            => "123",
+                    "order_id"      => "123",
+                    "status"        => 1,
+                    "amount"        => "20.00",
+                    "currency"      => "USD",
+                    "base_amount"   => null,
+                    "base_currency" => null,
+                    "created_at"    => "2021-08-08 10:00:00"
                 ],
                 [
-                    "id"         => "124",
-                    "order_id"   => "124",
-                    "status"     => 1,
-                    "amount"     => "30.00",
-                    "currency"   => "MAD",
-                    "created_at" => "2021-08-18 10:00:00"
+                    "id"            => "124",
+                    "order_id"      => "124",
+                    "status"        => 1,
+                    "amount"        => "30.00",
+                    "currency"      => "MAD",
+                    "base_amount"   => null,
+                    "base_currency" => null,
+                    "created_at"    => "2021-08-18 10:00:00"
                 ]
             ]
         );

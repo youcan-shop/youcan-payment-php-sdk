@@ -22,6 +22,12 @@ class Transaction
     /** @var string */
     private $currency;
 
+    /** @var ?string */
+    private $baseAmount;
+
+    /** @var ?string */
+    private $baseCurrency;
+
     /** @var Carbon */
     private $createdAt;
 
@@ -31,7 +37,9 @@ class Transaction
         int $status,
         string $amount,
         string $currency,
-        Carbon $createdAt
+        Carbon $createdAt,
+        ?string $baseAmount,
+        ?string $baseCurrency
     ) {
         $this->id = $id;
         $this->orderId = $orderId;
@@ -39,6 +47,8 @@ class Transaction
         $this->amount = $amount;
         $this->currency = $currency;
         $this->createdAt = $createdAt;
+        $this->baseAmount = $baseAmount;
+        $this->baseCurrency = $baseCurrency;
     }
 
     public function getId(): string
@@ -66,6 +76,16 @@ class Transaction
         return $this->currency;
     }
 
+    public function getBaseAmount(): ?string
+    {
+        return $this->baseAmount;
+    }
+
+    public function getBaseCurrency(): ?string
+    {
+        return $this->baseCurrency;
+    }
+
     public function getCreatedAt(): string
     {
         return $this->createdAt;
@@ -73,14 +93,20 @@ class Transaction
 
     public static function createFromArray(array $attributes): self
     {
-        $hasMissingKeys = !isset(
-            $attributes['id'],
-            $attributes['order_id'],
-            $attributes['status'],
-            $attributes['amount'],
-            $attributes['currency'],
-            $attributes['created_at']
-        );
+        $hasMissingKeys = count(
+                array_diff([
+                    'id',
+                    'order_id',
+                    'status',
+                    'amount',
+                    'currency',
+                    'base_currency',
+                    'base_amount',
+                    'created_at'
+                ],
+                    array_keys($attributes)
+                )
+            ) !== 0;
 
         if ($hasMissingKeys) {
             throw new InvalidArgumentException('missing keys in transaction response');
@@ -92,7 +118,9 @@ class Transaction
             (int)$attributes['status'],
             $attributes['amount'],
             $attributes['currency'],
-            Carbon::make($attributes['created_at'])
+            Carbon::make($attributes['created_at']),
+            $attributes['base_amount'],
+            $attributes['base_currency']
         );
     }
 }
