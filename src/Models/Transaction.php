@@ -93,16 +93,20 @@ class Transaction
 
     public static function createFromArray(array $attributes): self
     {
-        $hasMissingKeys = !isset(
-            $attributes['id'],
-            $attributes['order_id'],
-            $attributes['status'],
-            $attributes['amount'],
-            $attributes['currency'],
-            $attributes['base_currency'],
-            $attributes['base_amount'],
-            $attributes['created_at']
-        );
+        $hasMissingKeys = count(
+                array_diff([
+                    'id',
+                    'order_id',
+                    'status',
+                    'amount',
+                    'currency',
+                    'base_currency',
+                    'base_amount',
+                    'created_at'
+                ],
+                    array_keys($attributes)
+                )
+            ) !== 0;
 
         if ($hasMissingKeys) {
             throw new InvalidArgumentException('missing keys in transaction response');
