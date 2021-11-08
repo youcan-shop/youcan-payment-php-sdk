@@ -41,7 +41,7 @@ class CurlHTTPAdapter extends HTTPAdapter
         if ($method === 'post') {
             $curl = curl_init(sprintf('%s%s', $this->getBaseUrl(), $endpoint));
         } else {
-            $curl = curl_init(sprintf( '%s%s?%s', $this->getBaseUrl(), $endpoint, http_build_query($params)));
+            $curl = curl_init(sprintf('%s%s?%s', $this->getBaseUrl(), $endpoint, http_build_query($params)));
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
