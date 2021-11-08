@@ -38,7 +38,7 @@ class CurlHTTPAdapter extends HTTPAdapter
         $headers["Accept"] = "application/json";
         $method = strtolower($method);
 
-        if ($method == 'post') {
+        if ($method === 'post') {
             $curl = curl_init(sprintf('%s%s', $this->getBaseUrl(), $endpoint));
         } else {
             $curl = curl_init(sprintf( '%s%s?%s', $this->getBaseUrl(), $endpoint, http_build_query($params)));
