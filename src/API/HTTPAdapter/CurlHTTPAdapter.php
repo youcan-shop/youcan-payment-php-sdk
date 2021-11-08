@@ -35,6 +35,7 @@ class CurlHTTPAdapter extends HTTPAdapter
 
     public function request(string $method, string $endpoint, array $params = [], array $headers = []): Response
     {
+        $headers["content-type"] = "application/json";
         $headers["Accept"] = "application/json";
         $method = strtolower($method);
 
