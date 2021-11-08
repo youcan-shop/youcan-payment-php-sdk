@@ -35,16 +35,21 @@ class CurlHTTPAdapter extends HTTPAdapter
 
     public function request(string $method, string $endpoint, array $params = [], array $headers = []): Response
     {
-        $curl = curl_init(sprintf('%s%s', $this->getBaseUrl(), $endpoint));
-        $headers["Content-Type"] = "application/json";
         $headers["Accept"] = "application/json";
+        $method = strtolower($method);
+
+        if ($method == 'post') {
+            $curl = curl_init(sprintf('%s%s', $this->getBaseUrl(), $endpoint));
+        } else {
+            $curl = curl_init(sprintf( '%s%s?%s', $this->getBaseUrl(), $endpoint, http_build_query($params)));
+        }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->parseHeaders($headers));
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, self::DEFAULT_CONNECT_TIMEOUT);
         curl_setopt($curl, CURLOPT_TIMEOUT, self::DEFAULT_TIMEOUT);
 
-        switch (strtolower($method)) {
+        switch ($method) {
             case 'post':
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
