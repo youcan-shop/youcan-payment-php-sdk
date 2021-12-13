@@ -21,7 +21,7 @@ use YouCan\Pay\YouCanPay;
 $youCanPay = YouCanPay::instance()->useKeys('my-private-key', 'my-public-key');
 
 // check keys are valid
-YouCanPay::instance()->keys->check('private-key', 'public-key');
+YouCanPay::instance()->checkKeys('private-key', 'public-key');
 // or using current instance
 $youCanPay->keys->check('private-key', 'public-key');
 
