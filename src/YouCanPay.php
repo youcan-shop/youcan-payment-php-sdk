@@ -4,9 +4,11 @@ namespace YouCan\Pay;
 
 use YouCan\Pay\API\APIService;
 use YouCan\Pay\API\APIServiceInterface;
+use YouCan\Pay\API\Endpoints\KeysEndpoint;
 use YouCan\Pay\API\Endpoints\TokenEndpoint;
 use YouCan\Pay\API\Endpoints\TransactionEndpoint;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapterPicker;
+use YouCan\Pay\API\Exceptions\InvalidResponseException;
 
 class YouCanPay
 {
@@ -15,6 +17,9 @@ class YouCanPay
 
     /** @var TokenEndpoint */
     public $token;
+
+    /** @var KeysEndpoint */
+    public $keys;
 
     public function __construct(APIServiceInterface $apiService)
     {
@@ -38,6 +43,7 @@ class YouCanPay
     {
         $this->transaction = new TransactionEndpoint($apiService);
         $this->token = new TokenEndpoint($apiService);
+        $this->keys = new KeysEndpoint($apiService);
     }
 
     public static function setIsSandboxMode(bool $isSandboxMode): void
@@ -48,5 +54,13 @@ class YouCanPay
     public static function instance(): self
     {
         return new self(new APIService(new HTTPAdapterPicker()));
+    }
+
+    /**
+     * @throws InvalidResponseException
+     */
+    public function checkKeys(?string $privateKey = null, ?string $publicKey = null): bool
+    {
+        return $this->keys->check($privateKey, $publicKey);
     }
 }
