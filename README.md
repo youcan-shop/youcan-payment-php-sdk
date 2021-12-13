@@ -20,6 +20,11 @@ use YouCan\Pay\YouCanPay;
 
 $youCanPay = YouCanPay::instance()->useKeys('my-private-key', 'my-public-key');
 
+// check keys are valid
+YouCanPay::instance()->key->check('my-private-key', 'my-public-key');
+// or using current instance
+$youCanPay->key->check();
+
 // generate a token for a new payment
 $token = $youCanPay->token->create("order-id", "2000", "USD", "123.123.123.123");
 var_dump($token->getToken(), $token->getRedirectURL());
