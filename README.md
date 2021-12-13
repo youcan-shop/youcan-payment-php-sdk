@@ -21,9 +21,9 @@ use YouCan\Pay\YouCanPay;
 $youCanPay = YouCanPay::instance()->useKeys('my-private-key', 'my-public-key');
 
 // check keys are valid
-YouCanPay::instance()->key->check('private-key', 'public-key');
+YouCanPay::instance()->keys->check('private-key', 'public-key');
 // or using current instance
-$youCanPay->key->check('private-key', 'public-key');
+$youCanPay->keys->check('private-key', 'public-key');
 
 // generate a token for a new payment
 $token = $youCanPay->token->create("order-id", "2000", "USD", "123.123.123.123");

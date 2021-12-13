@@ -4,20 +4,18 @@ namespace Tests\API\Endpoints;
 
 use Tests\API\FakeAPIService;
 use Tests\BaseTestCase;
-use YouCan\Pay\API\Endpoints\KeyEndpoint;
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
-use YouCan\Pay\API\Exceptions\ValidationException;
+use YouCan\Pay\API\Endpoints\KeysEndpoint;
 use YouCan\Pay\API\Response;
 
-class KeyEndpointTest extends BaseTestCase
+class KeysEndpointTest extends BaseTestCase
 {
     public function test_check_keys_success()
     {
         $response = new Response(200, []);
         $fakeAPIService = new FakeAPIService($response);
 
-        $keyEndpoint = new KeyEndpoint($fakeAPIService);
-        $result = $keyEndpoint->check("pri_key_123", "pub_key_123");
+        $keysEndpoint = new KeysEndpoint($fakeAPIService);
+        $result = $keysEndpoint->check("pri_key_123", "pub_key_123");
 
         $this->assertTrue($result);
     }
@@ -28,8 +26,8 @@ class KeyEndpointTest extends BaseTestCase
 
         $fakeAPIService = new FakeAPIService($response);
 
-        $keyEndpoint = new KeyEndpoint($fakeAPIService);
-        $result = $keyEndpoint->check("pri_key_123", "pub_key_123");
+        $keysEndpoint = new KeysEndpoint($fakeAPIService);
+        $result = $keysEndpoint->check("pri_key_123", "pub_key_123");
 
         $this->assertFalse($result);
     }
@@ -39,8 +37,8 @@ class KeyEndpointTest extends BaseTestCase
         $response = new Response(404, []);
         $fakeAPIService = new FakeAPIService($response);
 
-        $keyEndpoint = new KeyEndpoint($fakeAPIService);
-        $result = $keyEndpoint->check();
+        $keysEndpoint = new KeysEndpoint($fakeAPIService);
+        $result = $keysEndpoint->check();
 
         $this->assertFalse($result);
     }

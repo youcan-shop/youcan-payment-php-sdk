@@ -5,7 +5,7 @@ namespace YouCan\Pay\API\Endpoints;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Response;
 
-class KeyEndpoint extends Endpoint
+class KeysEndpoint extends Endpoint
 {
     private const BASE_ENDPOINT = 'keys';
 
