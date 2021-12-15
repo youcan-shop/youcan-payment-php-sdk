@@ -63,4 +63,16 @@ class YouCanPay
     {
         return $this->keys->check($privateKey, $publicKey);
     }
+
+    public function verifyWebhookSignature(string $signature, string $payload, string $privateKey): bool
+    {
+        $expectedSignature = hash_hmac(
+            'sha256',
+            $payload,
+            $privateKey,
+            false
+        );
+
+        return hash_equals($expectedSignature, $signature);
+    }
 }
