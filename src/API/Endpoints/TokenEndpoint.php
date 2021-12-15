@@ -19,20 +19,22 @@ class TokenEndpoint extends Endpoint
         string $customerIP,
         string $successUrl = null,
         string $errorUrl = null,
-        array $customerInfo = []
+        array $customerInfo = [],
+        array $webhookMetadata = []
     ): Token
     {
         $this->assertPrivateKeyIsSet();
 
         $response = $this->apiService->post($this->createEndpoint(), [
-            'pri_key'     => $this->apiService->getPrivateKey(),
-            'amount'      => $amount,
-            'currency'    => $currency,
-            'order_id'    => $orderId,
-            'success_url' => $successUrl,
-            'error_url'   => $errorUrl,
-            'customer_ip' => $customerIP,
-            'customer'    => $customerInfo
+            'pri_key'           => $this->apiService->getPrivateKey(),
+            'amount'            => $amount,
+            'currency'          => $currency,
+            'order_id'          => $orderId,
+            'success_url'       => $successUrl,
+            'error_url'         => $errorUrl,
+            'customer_ip'       => $customerIP,
+            'customer'          => $customerInfo,
+            'webhook_metadata'  => $webhookMetadata,
         ]);
 
         $responseData = $response->getResponse();
