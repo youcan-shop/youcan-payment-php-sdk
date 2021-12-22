@@ -20,7 +20,7 @@ class TokenEndpoint extends Endpoint
         string $successUrl = null,
         string $errorUrl = null,
         array $customerInfo = [],
-        array $webhookMetadata = []
+        array $metadata = []
     ): Token
     {
         $this->assertPrivateKeyIsSet();
@@ -34,7 +34,7 @@ class TokenEndpoint extends Endpoint
             'error_url'         => $errorUrl,
             'customer_ip'       => $customerIP,
             'customer'          => $customerInfo,
-            'webhook_metadata'  => $webhookMetadata,
+            'metadata'          => $metadata,
         ]);
 
         $responseData = $response->getResponse();
