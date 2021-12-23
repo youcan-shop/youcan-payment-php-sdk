@@ -10,9 +10,11 @@ class WebhookTest extends BaseTestCase
 {
     public function test_valid_signature_check()
     {
-        $youcanPay = YouCanPay::instance();
-
         $privateKey = 'pri_t0talIy-l9g1t-aNd-Va|1d-UU1D';
+
+        $youcanPay = YouCanPay::instance();
+        $youcanPay->useKeys($privateKey, '');
+
         $payload = $this->getWebhookPayload();
 
         $signature = hash_hmac(
@@ -22,26 +24,28 @@ class WebhookTest extends BaseTestCase
             false
         );
 
-        $result = $youcanPay->verifyWebhookSignature($signature, $payload, $privateKey);
+        $result = $youcanPay->verifyWebhookSignature($signature, $payload);
 
         $this->assertTrue($result);
     }
 
     public function test_invalid_signature_check()
     {
-        $youcanPay = YouCanPay::instance();
-
         $privateKey = 'pri_t0talIy-l9g1t-aNd-Va|1d-UU1D';
+
+        $youcanPay = YouCanPay::instance();
+        $youcanPay->useKeys($privateKey, '');
+
         $payload = $this->getWebhookPayload();
 
         $signature = hash_hmac(
             'sha256',
             json_encode($payload),
-            $privateKey,
+            'invalid_private_key',
             false
         );
 
-        $result = $youcanPay->verifyWebhookSignature($signature, $payload, 'invalid_private_key');
+        $result = $youcanPay->verifyWebhookSignature($signature, $payload);
 
         $this->assertFalse($result);
     }
@@ -50,19 +54,20 @@ class WebhookTest extends BaseTestCase
     {
         $this->expectException(InvalidWebhookSignatureException::class);
 
-        $youcanPay = YouCanPay::instance();
-
         $privateKey = 'pri_t0talIy-l9g1t-aNd-Va|1d-UU1D';
+        $youcanPay = YouCanPay::instance();
+        $youcanPay->useKeys($privateKey, '');
+
         $payload = $this->getWebhookPayload();
 
         $signature = hash_hmac(
             'sha256',
             json_encode($payload),
-            $privateKey,
+            'invalid_private_key',
             false
         );
 
-        $youcanPay->validateWebhookSignature($signature, $payload, 'invalid_private_key');
+        $youcanPay->validateWebhookSignature($signature, $payload);
     }
 
     private function getWebhookPayload(): array

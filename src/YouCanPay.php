@@ -22,6 +22,9 @@ class YouCanPay
     /** @var KeysEndpoint */
     public $keys;
 
+    /** @var APIServiceInterface */
+    private $apiService;
+
     public function __construct(APIServiceInterface $apiService)
     {
         $this->initializeEndpoints($apiService);
@@ -42,6 +45,7 @@ class YouCanPay
      */
     private function initializeEndpoints(APIServiceInterface $apiService): void
     {
+        $this->apiService = $apiService;
         $this->transaction = new TransactionEndpoint($apiService);
         $this->token = new TokenEndpoint($apiService);
         $this->keys = new KeysEndpoint($apiService);
@@ -65,12 +69,12 @@ class YouCanPay
         return $this->keys->check($privateKey, $publicKey);
     }
 
-    public function verifyWebhookSignature(string $signature, array $payload, string $privateKey): bool
+    public function verifyWebhookSignature(string $signature, array $payload): bool
     {
         $expectedSignature = hash_hmac(
             'sha256',
             json_encode($payload),
-            $privateKey,
+            $this->apiService->getPrivateKey(),
             false
         );
 
@@ -80,12 +84,11 @@ class YouCanPay
     /**
      * @param string $signature
      * @param array $payload
-     * @param string $privateKey
      * @throws InvalidWebhookSignatureException
      */
-    public function validateWebhookSignature(string $signature, array $payload, string $privateKey): void
+    public function validateWebhookSignature(string $signature, array $payload): void
     {
-        if ($this->verifyWebhookSignature($signature, $payload, $privateKey) === false) {
+        if ($this->verifyWebhookSignature($signature, $payload) === false) {
             throw new InvalidWebhookSignatureException($payload, $signature);
         }
     }
