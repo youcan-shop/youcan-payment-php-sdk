@@ -16,7 +16,7 @@ class WebhookTest extends BaseTestCase
 
         $signature = hash_hmac(
             'sha256',
-            $payload,
+            json_encode($payload),
             $privateKey,
             false
         );
@@ -35,7 +35,7 @@ class WebhookTest extends BaseTestCase
 
         $signature = hash_hmac(
             'sha256',
-            $payload,
+            json_encode($payload),
             $privateKey,
             false
         );
@@ -45,9 +45,9 @@ class WebhookTest extends BaseTestCase
         $this->assertFalse($result);
     }
 
-    private function getWebhookPayload(): string 
+    private function getWebhookPayload(): array
     {
-        return json_encode([
+        return [
             "event_id"      => 9999,
             "event_name"    => "transaction.success",
             "payload"       => [
@@ -68,6 +68,6 @@ class WebhookTest extends BaseTestCase
                     ],
                 ],
             ]
-        ]);
+        ];
     }
 }
