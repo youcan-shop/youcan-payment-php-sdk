@@ -7,6 +7,7 @@ use YouCan\Pay\API\APIServiceInterface;
 use YouCan\Pay\API\Endpoints\KeysEndpoint;
 use YouCan\Pay\API\Endpoints\TokenEndpoint;
 use YouCan\Pay\API\Endpoints\TransactionEndpoint;
+use YouCan\Pay\API\Exceptions\InvalidWebhookSignatureException;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapterPicker;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 
@@ -74,5 +75,18 @@ class YouCanPay
         );
 
         return hash_equals($expectedSignature, $signature);
+    }
+
+    /**
+     * @param string $signature
+     * @param array $payload
+     * @param string $privateKey
+     * @throws InvalidWebhookSignatureException
+     */
+    public function validateWebhookSignature(string $signature, array $payload, string $privateKey): void
+    {
+        if ($this->verifyWebhookSignature($signature, $payload, $privateKey) === false) {
+            throw new InvalidWebhookSignatureException($payload, $signature);
+        }
     }
 }

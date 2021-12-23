@@ -3,6 +3,7 @@
 namespace Tests\Webhook;
 
 use Tests\BaseTestCase;
+use YouCan\Pay\API\Exceptions\InvalidWebhookSignatureException;
 use YouCan\Pay\YouCanPay;
 
 class WebhookTest extends BaseTestCase
@@ -43,6 +44,25 @@ class WebhookTest extends BaseTestCase
         $result = $youcanPay->verifyWebhookSignature($signature, $payload, 'invalid_private_key');
 
         $this->assertFalse($result);
+    }
+
+    public function test_it_throws_exception_on_invalid_signature()
+    {
+        $this->expectException(InvalidWebhookSignatureException::class);
+
+        $youcanPay = YouCanPay::instance();
+
+        $privateKey = 'pri_t0talIy-l9g1t-aNd-Va|1d-UU1D';
+        $payload = $this->getWebhookPayload();
+
+        $signature = hash_hmac(
+            'sha256',
+            json_encode($payload),
+            $privateKey,
+            false
+        );
+
+        $youcanPay->validateWebhookSignature($signature, $payload, 'invalid_private_key');
     }
 
     private function getWebhookPayload(): array
