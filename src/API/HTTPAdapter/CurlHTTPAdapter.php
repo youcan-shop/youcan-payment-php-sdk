@@ -74,6 +74,6 @@ class CurlHTTPAdapter extends HTTPAdapter
 
         $responseBody = json_decode((string)$response, true);
 
-        return new Response($statusCode, !is_array($responseBody) ? $responseBody : []);
+        return new Response($statusCode, is_array($responseBody) ? $responseBody : []);
     }
 }

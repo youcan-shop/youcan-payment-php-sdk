@@ -39,7 +39,7 @@ class Guzzle67HTTPAdapter extends HTTPAdapter
 
         $responseBody = json_decode((string)$response->getBody(), true);
 
-        return new Response($response->getStatusCode(), !is_array($responseBody) ? $responseBody : []);
+        return new Response($response->getStatusCode(), is_array($responseBody) ? $responseBody : []);
     }
 
     private function assertSuccessResponsePayload(ResponseInterface $response): void
