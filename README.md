@@ -72,7 +72,7 @@ use YouCan\Pay\YouCanPay;
 class ExamplePayment
 {
     /**
-     * Return a URL to make payment for an order.
+     * Return a token to make payment for an order, this token is required to make payment with JS script.
      *
      * @return string
      */
