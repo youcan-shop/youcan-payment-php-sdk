@@ -49,11 +49,16 @@ If you choose to use JS integration, you must have an SSL certificate to run in 
 2.1.3: Add this code just before the end of the `...</body>` tag.
 ```html
 <script type="text/javascript">
-    // Create a YouCan Pay instance, to retrieve your public key login to your YouCan Pay account
-    // and go to Settings and open API Keys.
-    var ycPay = new YCPay("my-public-key", "en");
+    // Create a YouCan Pay instance.
+    var ycPay = new YCPay(
+        // String public_key (required): Login to your account.
+        // Go to Settings and open API Keys and copy your key.
+        "my-public-key",
+        // String lang (optional): Support 3 languages: AR, EN and FR.
+        "ar"
+    );
 
-    // render the form
+    // Render the form.
     ycPay.renderForm("#payment-card", "default");
 </script>
 ```
@@ -129,10 +134,10 @@ class ExamplePayment
 When the buyer clicks on the Pay button. the JS code below runs, and you receive a **GET** response in `successUrl` or `errorUrl` you defined in the tokenization step.
 ```html
 <script type="text/javascript">
-    // start the payment on button click
+    // Start the payment on button click
     document.getElementById('pay').addEventListener('click', function() {
-      // execute the payment
-      ycPay.pay(tokenId)
+      // Execute the payment, it is required to put the created token in the tokenization step.
+      ycPay.pay("<?php createToken(); ?>")
               .then(successCallback)
               .catch(errorCallback);
     });
