@@ -6,7 +6,7 @@ use YouCan\Pay\API\Response;
 
 abstract class HTTPAdapter
 {
-    public const BASE_APP_URL = 'https://pay.youcan.shop/';
+    public const BASE_APP_URL = 'https://youcanpay.com/';
 
     private $isSandboxMode = false;
 
