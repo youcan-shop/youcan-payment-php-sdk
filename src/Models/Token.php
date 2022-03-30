@@ -11,18 +11,9 @@ class Token
     /** @var string */
     private $id;
 
-    /** @var string */
-    private $transactionId;
-
-    public function __construct(string $id, string $transactionId)
+    public function __construct(string $id)
     {
         $this->id = $id;
-        $this->transactionId = $transactionId;
-    }
-
-    public function getTransactionId(): string
-    {
-        return $this->transactionId;
     }
 
     public function getId(): string
@@ -34,14 +25,13 @@ class Token
     {
         $hasMissingKeys = !isset(
             $attributes['id'],
-            $attributes['transaction_id']
         );
 
         if ($hasMissingKeys) {
             throw new InvalidArgumentException('missing keys in token response');
         }
 
-        return new self($attributes['id'], $attributes['transaction_id']);
+        return new self($attributes['id']);
     }
 
     public function getPaymentURL($lang = 'en'): string
