@@ -8,8 +8,7 @@ use YouCan\Pay\API\HTTPAdapter\HTTPAdapter;
 
 class Token
 {
-    /** @var string */
-    private $id;
+    private string $id;
 
     public function __construct(string $id)
     {
@@ -21,10 +20,10 @@ class Token
         return $this->id;
     }
 
-    public static function createFromArray(array $attributes)
+    public static function createFromArray(array $attributes): self
     {
         $hasMissingKeys = !isset(
-            $attributes['id'],
+            $attributes['id']
         );
 
         if ($hasMissingKeys) {
@@ -36,6 +35,11 @@ class Token
 
     public function getPaymentURL($lang = 'en'): string
     {
-        return sprintf("%spayment-form/%s?lang=%s", HTTPAdapter::BASE_APP_URL . (APIService::$isSandboxMode ? 'sandbox/' : ''), $this->getId(), $lang);
+        return sprintf(
+            "%spayment-form/%s?lang=%s",
+            HTTPAdapter::BASE_APP_URL . (APIService::$isSandboxMode ? 'sandbox/' : ''),
+            $this->getId(),
+            $lang
+        );
     }
 }
