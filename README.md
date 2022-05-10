@@ -67,6 +67,7 @@ If you choose to use JS integration, you must have an SSL certificate to run in 
     "public_key",
     // Optional options object
     {
+      formContainer: "#payment-card",
       // Defines what language the form should be rendered in, supports EN, AR, FR.
       locale: "en",
 
@@ -81,9 +82,10 @@ If you choose to use JS integration, you must have an SSL certificate to run in 
   );
 
   // Select which gateways to render
-  ycPay.renderAvailableGateways("#payment-card", ["CashPlus", "CreditCard"]);
+  ycPay.renderAvailableGateways(["CashPlus", "CreditCard"]);
+
   // Alternatively, you may use gateway specific render methods if you only need one.
-  ycPay.renderCreditCardGateway("#payment-card");
+  ycPay.renderCreditCardForm();
 </script>
 ```
 
