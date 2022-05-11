@@ -71,12 +71,6 @@ class TokenEndpoint extends Endpoint
             if ($response->get('success') === false && is_string($response->get('message'))) {
                 throw new ValidationException((string)$response->get('message'));
             }
-
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
-                json_encode($response->getResponse()),
-                'account not found, please re-check the giving keys.'
-            );
         }
 
         if ($response->getStatusCode() === 422) {
