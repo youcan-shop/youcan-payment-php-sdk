@@ -21,20 +21,19 @@ class TokenEndpoint extends Endpoint
         string $errorUrl = null,
         array $customerInfo = [],
         array $metadata = []
-    ): Token
-    {
+    ): Token {
         $this->assertPrivateKeyIsSet();
 
         $response = $this->apiService->post($this->createEndpoint(), [
-            'pri_key'           => $this->apiService->getPrivateKey(),
-            'amount'            => $amount,
-            'currency'          => $currency,
-            'order_id'          => $orderId,
-            'success_url'       => $successUrl,
-            'error_url'         => $errorUrl,
-            'customer_ip'       => $customerIP,
-            'customer'          => $customerInfo,
-            'metadata'          => $metadata,
+            'pri_key'     => $this->apiService->getPrivateKey(),
+            'amount'      => $amount,
+            'currency'    => $currency,
+            'order_id'    => $orderId,
+            'success_url' => $successUrl,
+            'error_url'   => $errorUrl,
+            'customer_ip' => $customerIP,
+            'customer'    => $customerInfo,
+            'metadata'    => $metadata,
         ]);
 
         $responseData = $response->getResponse();
@@ -51,6 +50,7 @@ class TokenEndpoint extends Endpoint
 
     /**
      * @param Response $response
+     *
      * @throws ValidationException|InvalidArgumentException
      */
     private function assertResponse(Response $response): void
@@ -65,6 +65,18 @@ class TokenEndpoint extends Endpoint
             }
 
             return;
+        }
+
+        if ($response->getStatusCode() === 404) {
+            if ($response->get('success') === false && is_string($response->get('message'))) {
+                throw new ValidationException((string)$response->get('message'));
+            }
+
+            throw new InvalidResponseException(
+                $response->getStatusCode(),
+                json_encode($response->getResponse()),
+                'account not found, please re-check the giving keys.'
+            );
         }
 
         if ($response->getStatusCode() === 422) {
