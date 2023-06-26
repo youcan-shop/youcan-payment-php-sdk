@@ -5,6 +5,7 @@ namespace YouCan\Pay\API\Endpoints;
 use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use YouCan\Pay\API\Exceptions\MissingTokenException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\UnexpectedResultException;
 use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
@@ -61,7 +62,7 @@ class TokenEndpoint extends Endpoint
     {
         if ($response->getStatusCode() === 200) {
             if (!is_array($response->get('token')) || !is_string($response->get('token')['id'])) {
-                throw new UnsupportedResponseException(
+                throw new MissingTokenException(
                     'missing token in response. Please try again or contact support',
                     json_encode($response->getResponse()),
                     $response->getStatusCode(),
