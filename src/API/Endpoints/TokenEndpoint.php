@@ -2,13 +2,11 @@
 
 namespace YouCan\Pay\API\Endpoints;
 
-use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\Token\MissingTokenException;
 use YouCan\Pay\API\Exceptions\UnexpectedResultException;
 use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
-use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
 
@@ -55,7 +53,7 @@ class TokenEndpoint extends Endpoint
     /**
      * @param Response $response
      *
-     * @throws ValidationException|InvalidArgumentException
+     * @throws MissingTokenException|ClientException|UnexpectedResultException|ServerException|UnsupportedResponseException
      */
     private function assertResponse(Response $response): void
     {
