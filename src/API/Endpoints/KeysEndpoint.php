@@ -3,6 +3,7 @@
 namespace YouCan\Pay\API\Endpoints;
 
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Response;
 
 class KeysEndpoint extends Endpoint
@@ -13,7 +14,7 @@ class KeysEndpoint extends Endpoint
      * @param string|null $privateKey
      * @param string|null $publicKey
      * @return bool
-     * @throws InvalidResponseException
+     * @throws ServerException
      */
     public function check(?string $privateKey = null, ?string $publicKey = null): bool
     {
@@ -40,7 +41,7 @@ class KeysEndpoint extends Endpoint
     /**
      * @param Response $response
      * @return bool
-     * @throws InvalidResponseException
+     * @throws ServerException
      */
     private function assertResponse(Response $response): bool
     {
@@ -49,10 +50,10 @@ class KeysEndpoint extends Endpoint
         }
 
         if ($response->getStatusCode() >= 500 && $response->getStatusCode() < 600) {
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
+            throw new ServerException(
+                'internal error from server. Support has been notified. Please try again!',
                 json_encode($response->getResponse()),
-                'internal error from server. Support has been notified. Please try again!'
+                $response->getStatusCode(),
             );
         }
 
