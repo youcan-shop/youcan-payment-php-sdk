@@ -6,14 +6,14 @@ use Throwable;
 
 class BadResponseException extends RequestException
 {
+    
     public function __construct(
         string $message,
-        string $request,
-        string $response,
-        $code = 0,
+        string $response = null,
+        int $code = 0,
         Throwable $previous = null
     ) {
-        parent::__construct($message, $request, $response, $code, $previous);
+        parent::__construct($message, $response, $code, $previous);
     }
 
     public function hasResponse(): bool
