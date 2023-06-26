@@ -3,6 +3,7 @@
 namespace YouCan\Pay\API\Endpoints;
 
 use InvalidArgumentException;
+use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\ValidationException;
@@ -70,13 +71,21 @@ class TokenEndpoint extends Endpoint
 
         if ($response->getStatusCode() === 404) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ValidationException((string)$response->get('message'));
+                throw new ClientException(
+                    (string)$response->get('message'),
+                    json_encode($response->getResponse()),
+                    $response->getStatusCode(),
+                );
             }
         }
 
         if ($response->getStatusCode() === 422) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ValidationException((string)$response->get('message'));
+                throw new ClientException(
+                    (string)$response->get('message'),
+                    json_encode($response->getResponse()),
+                    $response->getStatusCode(),
+                );
             }
 
             throw new InvalidResponseException(
