@@ -4,6 +4,7 @@ namespace YouCan\Pay\API\Endpoints;
 
 use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
@@ -86,10 +87,10 @@ class TokenEndpoint extends Endpoint
         }
 
         if ($response->getStatusCode() >= 500 && $response->getStatusCode() < 600) {
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
+            throw new ServerException(
+                'internal error from server. Support has been notified. Please try again!',
                 json_encode($response->getResponse()),
-                'internal error from server. Support has been notified. Please try again!'
+                $response->getStatusCode(),
             );
         }
 

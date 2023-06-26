@@ -5,8 +5,7 @@ namespace Tests\API\Endpoints;
 use Tests\API\FakeAPIService;
 use Tests\BaseTestCase;
 use YouCan\Pay\API\Endpoints\TokenEndpoint;
-use YouCan\Pay\API\Endpoints\TransactionEndpoint;
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 
@@ -87,7 +86,7 @@ class TokenEndpointTest extends BaseTestCase
 
     public function test_internal_error()
     {
-        $this->expectException(InvalidResponseException::class);
+        $this->expectException(ServerException::class);
 
         $response = new Response(
             500,
