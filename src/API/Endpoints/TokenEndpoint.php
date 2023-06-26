@@ -7,6 +7,7 @@ use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\UnexpectedResultException;
+use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
@@ -60,10 +61,10 @@ class TokenEndpoint extends Endpoint
     {
         if ($response->getStatusCode() === 200) {
             if (!is_array($response->get('token')) || !is_string($response->get('token')['id'])) {
-                throw new InvalidResponseException(
-                    $response->getStatusCode(),
+                throw new UnsupportedResponseException(
+                    'missing token in response. Please try again or contact support',
                     json_encode($response->getResponse()),
-                    'missing token in response. Please try again or contact support'
+                    $response->getStatusCode(),
                 );
             }
 
