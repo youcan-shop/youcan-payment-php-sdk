@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Exceptions\ServerException;
+use YouCan\Pay\API\Exceptions\UnexpectedResultException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
@@ -88,10 +89,10 @@ class TokenEndpoint extends Endpoint
                 );
             }
 
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
+            throw new UnexpectedResultException(
+                'got unexpected result from server. Validation response with wrong payload',
                 json_encode($response->getResponse()),
-                'got unexpected result from server. Validation response with wrong payload'
+                $response->getStatusCode()
             );
         }
 
