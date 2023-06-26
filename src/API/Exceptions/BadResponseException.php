@@ -6,7 +6,6 @@ use Throwable;
 
 class BadResponseException extends RequestException
 {
-    
     public function __construct(
         string $message,
         string $response = null,
