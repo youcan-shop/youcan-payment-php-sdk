@@ -4,9 +4,8 @@ namespace YouCan\Pay\API\Endpoints;
 
 use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\ClientException;
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
-use YouCan\Pay\API\Exceptions\MissingTokenException;
 use YouCan\Pay\API\Exceptions\ServerException;
+use YouCan\Pay\API\Exceptions\Token\MissingTokenException;
 use YouCan\Pay\API\Exceptions\UnexpectedResultException;
 use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
 use YouCan\Pay\API\Exceptions\ValidationException;
