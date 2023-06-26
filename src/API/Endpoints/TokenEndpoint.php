@@ -105,10 +105,10 @@ class TokenEndpoint extends Endpoint
             );
         }
 
-        throw new InvalidResponseException(
+        throw new UnsupportedResponseException(
+            'not supported status code from the server.',
             $response->getStatusCode(),
             json_encode($response->getResponse()),
-            'not supported status code from the server.'
         );
     }
 }
