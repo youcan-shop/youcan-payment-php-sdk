@@ -2,11 +2,11 @@
 
 namespace YouCan\Pay\API\Endpoints;
 
-use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\Token\MissingTokenException;
 use YouCan\Pay\API\Exceptions\UnexpectedResultException;
 use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
+use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
 
@@ -53,7 +53,7 @@ class TokenEndpoint extends Endpoint
     /**
      * @param Response $response
      *
-     * @throws MissingTokenException|ClientException|UnexpectedResultException|ServerException|UnsupportedResponseException
+     * @throws MissingTokenException|ValidationException|UnexpectedResultException|ServerException|UnsupportedResponseException
      */
     private function assertResponse(Response $response): void
     {
@@ -71,7 +71,7 @@ class TokenEndpoint extends Endpoint
 
         if ($response->getStatusCode() === 404) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ClientException(
+                throw new ValidationException(
                     (string)$response->get('message'),
                     json_encode($response->getResponse()),
                     $response->getStatusCode(),
@@ -81,7 +81,7 @@ class TokenEndpoint extends Endpoint
 
         if ($response->getStatusCode() === 422) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ClientException(
+                throw new ValidationException(
                     (string)$response->get('message'),
                     json_encode($response->getResponse()),
                     $response->getStatusCode(),

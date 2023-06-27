@@ -5,7 +5,6 @@ namespace Tests\API\Endpoints;
 use Tests\API\FakeAPIService;
 use Tests\BaseTestCase;
 use YouCan\Pay\API\Endpoints\TokenEndpoint;
-use YouCan\Pay\API\Exceptions\ClientException;
 use YouCan\Pay\API\Exceptions\ServerException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
@@ -35,7 +34,7 @@ class TokenEndpointTest extends BaseTestCase
 
     public function test_validation_exception_amount_is_less_than_minimum()
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(ValidationException::class);
 
         $response = new Response(
             422,
@@ -52,7 +51,7 @@ class TokenEndpointTest extends BaseTestCase
 
     public function test_validation_exception_amount_is_greater_than_maximum()
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(ValidationException::class);
 
         $response = new Response(
             422,
@@ -70,7 +69,7 @@ class TokenEndpointTest extends BaseTestCase
 
     public function test_validation_exception()
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(ValidationException::class);
 
         $response = new Response(
             422,
