@@ -2,12 +2,6 @@
 
 namespace YouCan\Pay\API\Exceptions;
 
-use Exception;
-
-class ValidationException extends Exception
+class ValidationException extends ClientException
 {
-    public function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
 }
