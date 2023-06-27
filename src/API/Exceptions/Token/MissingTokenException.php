@@ -2,8 +2,8 @@
 
 namespace YouCan\Pay\API\Exceptions\Token;
 
-use YouCan\Pay\API\Exceptions\BadResponseException;
+use YouCan\Pay\API\Exceptions\BaseException;
 
-class MissingTokenException extends BadResponseException
+class MissingTokenException extends BaseException
 {
 }

@@ -2,6 +2,6 @@
 
 namespace YouCan\Pay\API\Exceptions;
 
-class UnsupportedResponseException extends BadResponseException
+class UnsupportedResponseException extends BaseException
 {
 }
