@@ -37,14 +37,14 @@ abstract class Endpoint
     protected function assertPrivateKeyIsSet(): void
     {
         if ($this->apiService->getPrivateKey() === null) {
-            throw new UnsetPrivateKeyException();
+            throw new UnsetPrivateKeyException("private key not set");
         }
     }
 
     protected function assertPublicKeyIsSet(): void
     {
         if ($this->apiService->getPublicKey() === null) {
-            throw new UnsetPublicKeyException();
+            throw new UnsetPublicKeyException("public key not set");
         }
     }
 }
