@@ -2,8 +2,10 @@
 
 namespace YouCan\Pay\API\Endpoints;
 
-use InvalidArgumentException;
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use YouCan\Pay\API\Exceptions\ServerException;
+use YouCan\Pay\API\Exceptions\Token\MissingTokenException;
+use YouCan\Pay\API\Exceptions\UnexpectedResultException;
+use YouCan\Pay\API\Exceptions\UnsupportedResponseException;
 use YouCan\Pay\API\Exceptions\ValidationException;
 use YouCan\Pay\API\Response;
 use YouCan\Pay\Models\Token;
@@ -51,16 +53,16 @@ class TokenEndpoint extends Endpoint
     /**
      * @param Response $response
      *
-     * @throws ValidationException|InvalidArgumentException
+     * @throws MissingTokenException|ValidationException|UnexpectedResultException|ServerException|UnsupportedResponseException
      */
     private function assertResponse(Response $response): void
     {
         if ($response->getStatusCode() === 200) {
             if (!is_array($response->get('token')) || !is_string($response->get('token')['id'])) {
-                throw new InvalidResponseException(
-                    $response->getStatusCode(),
+                throw new MissingTokenException(
+                    'missing token in response. Please try again or contact support',
                     json_encode($response->getResponse()),
-                    'missing token in response. Please try again or contact support'
+                    $response->getStatusCode(),
                 );
             }
 
@@ -69,34 +71,42 @@ class TokenEndpoint extends Endpoint
 
         if ($response->getStatusCode() === 404) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ValidationException((string)$response->get('message'));
+                throw new ValidationException(
+                    (string)$response->get('message'),
+                    json_encode($response->getResponse()),
+                    $response->getStatusCode(),
+                );
             }
         }
 
         if ($response->getStatusCode() === 422) {
             if ($response->get('success') === false && is_string($response->get('message'))) {
-                throw new ValidationException((string)$response->get('message'));
+                throw new ValidationException(
+                    (string)$response->get('message'),
+                    json_encode($response->getResponse()),
+                    $response->getStatusCode(),
+                );
             }
 
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
+            throw new UnexpectedResultException(
+                'got unexpected result from server. Validation response with wrong payload',
                 json_encode($response->getResponse()),
-                'got unexpected result from server. Validation response with wrong payload'
+                $response->getStatusCode()
             );
         }
 
         if ($response->getStatusCode() >= 500 && $response->getStatusCode() < 600) {
-            throw new InvalidResponseException(
-                $response->getStatusCode(),
+            throw new ServerException(
+                'internal error from server. Support has been notified. Please try again!',
                 json_encode($response->getResponse()),
-                'internal error from server. Support has been notified. Please try again!'
+                $response->getStatusCode(),
             );
         }
 
-        throw new InvalidResponseException(
-            $response->getStatusCode(),
+        throw new UnsupportedResponseException(
+            'not supported status code from the server.',
             json_encode($response->getResponse()),
-            'not supported status code from the server.'
+            $response->getStatusCode(),
         );
     }
 }

@@ -4,6 +4,8 @@ namespace YouCan\Pay\API\Endpoints;
 
 use InvalidArgumentException;
 use YouCan\Pay\API\APIServiceInterface;
+use YouCan\Pay\API\Exceptions\Keys\UnsetPrivateKeyException;
+use YouCan\Pay\API\Exceptions\Keys\UnsetPublicKeyException;
 
 abstract class Endpoint
 {
@@ -35,14 +37,14 @@ abstract class Endpoint
     protected function assertPrivateKeyIsSet(): void
     {
         if ($this->apiService->getPrivateKey() === null) {
-            throw new InvalidArgumentException("private key not set");
+            throw new UnsetPrivateKeyException("private key not set");
         }
     }
 
     protected function assertPublicKeyIsSet(): void
     {
         if ($this->apiService->getPublicKey() === null) {
-            throw new InvalidArgumentException("public key not set");
+            throw new UnsetPublicKeyException("public key not set");
         }
     }
 }
