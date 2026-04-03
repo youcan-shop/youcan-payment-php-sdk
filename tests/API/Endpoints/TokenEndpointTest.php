@@ -98,7 +98,7 @@ class TokenEndpointTest extends BaseTestCase
         $tokenEndpoint->create("123", "10", "MAD", "123.123.123.123");
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }

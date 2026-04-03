@@ -105,7 +105,7 @@ class TransactionEndpointTest extends BaseTestCase
         $this->assertEquals($secondTransaction->getCreatedAt(), "2021-08-18 10:00:00");
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
