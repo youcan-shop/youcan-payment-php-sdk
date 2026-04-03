@@ -23,13 +23,13 @@
     "nesbot/carbon": "^2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^11.5"
   },
   "suggest": {
     "guzzlehttp/guzzle": "^6.3"
   },
   "scripts": {
-    "phpunit": "phpunit --verbose",
+    "phpunit": "phpunit --display-all-issues",
     "test": [
       "@phpunit"
     ]
