@@ -8,6 +8,7 @@ use YouCan\Pay\API\Response;
 class FakeAPIService implements APIServiceInterface
 {
     public static $isSandboxMode = false;
+    private Response $response;
 
     /** @var FakeAPIAdapter */
     private $httpAdapter;
