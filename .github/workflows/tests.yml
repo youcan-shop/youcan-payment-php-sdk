@@ -5,29 +5,29 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: arc-runners
 
     strategy:
       fail-fast: true
       matrix:
-        php: [7.4]
+        php: ['8.2']
 
     name: PHP ${{ matrix.php }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, json
-          tools: composer:v1
+          tools: composer:v2
           coverage: none
 
       - name: Install dependencies
         run: |
           composer install --prefer-dist --no-interaction --no-progress
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit --display-all-issues
