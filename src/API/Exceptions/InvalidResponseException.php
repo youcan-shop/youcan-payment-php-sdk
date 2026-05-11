@@ -6,13 +6,11 @@ use Exception;
 
 class InvalidResponseException extends Exception
 {
-    /** @var int */
-    private $responseStatus;
+    private int $responseStatus;
 
-    /** @var string */
-    private $responseBody;
+    private string $responseBody;
 
-    public function __construct(int $responseStatus, string $responseBody, string $message = null)
+    public function __construct(int $responseStatus, string $responseBody, ?string $message = null)
     {
         parent::__construct($message ?: "invalid response from YouCan Pay API");
 

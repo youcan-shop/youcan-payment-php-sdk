@@ -2,15 +2,13 @@
 
 namespace YouCan\Pay\API\Endpoints;
 
-use InvalidArgumentException;
 use YouCan\Pay\API\APIServiceInterface;
 use YouCan\Pay\API\Exceptions\Keys\UnsetPrivateKeyException;
 use YouCan\Pay\API\Exceptions\Keys\UnsetPublicKeyException;
 
 abstract class Endpoint
 {
-    /** @var APIServiceInterface */
-    protected $apiService;
+    protected APIServiceInterface $apiService;
 
     public function __construct(APIServiceInterface $apiService)
     {

@@ -19,8 +19,8 @@ class TokenEndpoint extends Endpoint
         string $amount,
         string $currency,
         string $customerIP,
-        string $successUrl = null,
-        string $errorUrl = null,
+        ?string $successUrl = null,
+        ?string $errorUrl = null,
         array $customerInfo = [],
         array $metadata = []
     ): Token {
@@ -51,8 +51,6 @@ class TokenEndpoint extends Endpoint
     }
 
     /**
-     * @param Response $response
-     *
      * @throws MissingTokenException|ValidationException|UnexpectedResultException|ServerException|UnsupportedResponseException
      */
     private function assertResponse(Response $response): void

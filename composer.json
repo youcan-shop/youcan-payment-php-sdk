@@ -19,6 +19,7 @@
     }
   },
   "require": {
+    "php": "^8.2",
     "ext-curl": "*",
     "nesbot/carbon": "^2.0 || ^3.0"
   },

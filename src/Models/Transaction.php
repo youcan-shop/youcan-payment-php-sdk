@@ -5,51 +5,18 @@ namespace YouCan\Pay\Models;
 use Carbon\Carbon;
 use InvalidArgumentException;
 
-class Transaction
+readonly class Transaction
 {
-    /** @var string */
-    private $id;
-
-    /** @var string */
-    private $orderId;
-
-    /** @var int */
-    private $status;
-
-    /** @var string */
-    private $amount;
-
-    /** @var string */
-    private $currency;
-
-    /** @var ?string */
-    private $baseAmount;
-
-    /** @var ?string */
-    private $baseCurrency;
-
-    /** @var Carbon */
-    private $createdAt;
-
     public function __construct(
-        string $id,
-        string $orderId,
-        int $status,
-        string $amount,
-        string $currency,
-        Carbon $createdAt,
-        ?string $baseAmount,
-        ?string $baseCurrency
-    ) {
-        $this->id = $id;
-        $this->orderId = $orderId;
-        $this->status = $status;
-        $this->amount = $amount;
-        $this->currency = $currency;
-        $this->createdAt = $createdAt;
-        $this->baseAmount = $baseAmount;
-        $this->baseCurrency = $baseCurrency;
-    }
+        private string $id,
+        private string $orderId,
+        private int $status,
+        private string $amount,
+        private string $currency,
+        private Carbon $createdAt,
+        private ?string $baseAmount,
+        private ?string $baseCurrency
+    ) {}
 
     public function getId(): string
     {
@@ -86,7 +53,7 @@ class Transaction
         return $this->baseCurrency;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }

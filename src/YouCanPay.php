@@ -2,6 +2,7 @@
 
 namespace YouCan\Pay;
 
+use Exception;
 use YouCan\Pay\API\APIService;
 use YouCan\Pay\API\APIServiceInterface;
 use YouCan\Pay\API\Endpoints\KeysEndpoint;
@@ -9,27 +10,25 @@ use YouCan\Pay\API\Endpoints\TokenEndpoint;
 use YouCan\Pay\API\Endpoints\TransactionEndpoint;
 use YouCan\Pay\API\Exceptions\InvalidWebhookSignatureException;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapterPicker;
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
 
 class YouCanPay
 {
-    /** @var TransactionEndpoint */
-    public $transaction;
+    public TransactionEndpoint $transaction;
 
-    /** @var TokenEndpoint */
-    public $token;
+    public TokenEndpoint $token;
 
-    /** @var KeysEndpoint */
-    public $keys;
+    public KeysEndpoint $keys;
 
-    /** @var APIServiceInterface */
-    private $apiService;
+    private APIServiceInterface $apiService;
 
     public function __construct(APIServiceInterface $apiService)
     {
         $this->initializeEndpoints($apiService);
     }
 
+    /**
+     * @throws Exception
+     */
     public function useKeys(string $privateKey, string $publicKey): self
     {
         $apiService = new APIService(new HTTPAdapterPicker());
@@ -40,9 +39,6 @@ class YouCanPay
         return $this;
     }
 
-    /**
-     * @param APIServiceInterface $apiService
-     */
     private function initializeEndpoints(APIServiceInterface $apiService): void
     {
         $this->apiService = $apiService;
@@ -56,14 +52,14 @@ class YouCanPay
         APIService::setIsSandboxMode($isSandboxMode);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function instance(): self
     {
         return new self(new APIService(new HTTPAdapterPicker()));
     }
 
-    /**
-     * @throws InvalidResponseException
-     */
     public function checkKeys(?string $privateKey = null, ?string $publicKey = null): bool
     {
         return $this->keys->check($privateKey, $publicKey);
@@ -74,16 +70,13 @@ class YouCanPay
         $expectedSignature = hash_hmac(
             'sha256',
             json_encode($payload),
-            $this->apiService->getPrivateKey(),
-            false
+            $this->apiService->getPrivateKey()
         );
 
         return hash_equals($expectedSignature, $signature);
     }
 
     /**
-     * @param string $signature
-     * @param array $payload
      * @throws InvalidWebhookSignatureException
      */
     public function validateWebhookSignature(string $signature, array $payload): void

@@ -6,11 +6,9 @@ use Exception;
 
 class InvalidWebhookSignatureException extends Exception
 {
-    /** @var array  */
-    private $payload;
+    private array $payload;
 
-    /** @var string */
-    private $signature;
+    private string $signature;
 
     public function __construct(array $payload, string $signature)
     {

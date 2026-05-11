@@ -23,7 +23,6 @@ class KeysEndpointTest extends BaseTestCase
     public function test_check_not_found_response_when_keys_not_correct()
     {
         $response = new Response(404, []);
-
         $fakeAPIService = new FakeAPIService($response);
 
         $keysEndpoint = new KeysEndpoint($fakeAPIService);
@@ -41,10 +40,5 @@ class KeysEndpointTest extends BaseTestCase
         $result = $keysEndpoint->check();
 
         $this->assertFalse($result);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
     }
 }

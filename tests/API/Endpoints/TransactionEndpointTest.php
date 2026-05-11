@@ -30,20 +30,17 @@ class TransactionEndpointTest extends BaseTestCase
         $transactionEndpoint = new TransactionEndpoint($fakeAPIService);
         $transaction = $transactionEndpoint->get("123");
 
-        $this->assertEquals($transaction->getId(), "123");
-        $this->assertEquals($transaction->getOrderId(), "123");
-        $this->assertEquals($transaction->getStatus(), 1);
-        $this->assertEquals($transaction->getAmount(), "20.00");
-        $this->assertEquals($transaction->getCurrency(), "USD");
-        $this->assertEquals($transaction->getCreatedAt(), "2021-08-08 10:00:00");
+        $this->assertEquals("123", $transaction->getId());
+        $this->assertEquals("123", $transaction->getOrderId());
+        $this->assertEquals(1, $transaction->getStatus());
+        $this->assertEquals("20.00", $transaction->getAmount());
+        $this->assertEquals("USD", $transaction->getCurrency());
+        $this->assertEquals("2021-08-08 10:00:00", $transaction->getCreatedAt()->toDateTimeString());
     }
 
     public function test_get_transaction_return_not_found()
     {
-        $response = new Response(
-            404,
-            []
-        );
+        $response = new Response(404, []);
         $fakeAPIService = new FakeAPIService($response);
 
         $transactionEndpoint = new TransactionEndpoint($fakeAPIService);
@@ -88,25 +85,20 @@ class TransactionEndpointTest extends BaseTestCase
 
         $firstTransaction = $transactions[0];
 
-        $this->assertEquals($firstTransaction->getId(), "123");
-        $this->assertEquals($firstTransaction->getOrderId(), "123");
-        $this->assertEquals($firstTransaction->getStatus(), 1);
-        $this->assertEquals($firstTransaction->getAmount(), "20.00");
-        $this->assertEquals($firstTransaction->getCurrency(), "USD");
-        $this->assertEquals($firstTransaction->getCreatedAt(), "2021-08-08 10:00:00");
+        $this->assertEquals("123", $firstTransaction->getId());
+        $this->assertEquals("123", $firstTransaction->getOrderId());
+        $this->assertEquals(1, $firstTransaction->getStatus());
+        $this->assertEquals("20.00", $firstTransaction->getAmount());
+        $this->assertEquals("USD", $firstTransaction->getCurrency());
+        $this->assertEquals("2021-08-08 10:00:00", $firstTransaction->getCreatedAt()->toDateTimeString());
 
         $secondTransaction = $transactions[1];
 
-        $this->assertEquals($secondTransaction->getId(), "124");
-        $this->assertEquals($secondTransaction->getOrderId(), "124");
-        $this->assertEquals($secondTransaction->getStatus(), 1);
-        $this->assertEquals($secondTransaction->getAmount(), "30.00");
-        $this->assertEquals($secondTransaction->getCurrency(), "MAD");
-        $this->assertEquals($secondTransaction->getCreatedAt(), "2021-08-18 10:00:00");
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
+        $this->assertEquals("124", $secondTransaction->getId());
+        $this->assertEquals("124", $secondTransaction->getOrderId());
+        $this->assertEquals(1, $secondTransaction->getStatus());
+        $this->assertEquals("30.00", $secondTransaction->getAmount());
+        $this->assertEquals("MAD", $secondTransaction->getCurrency());
+        $this->assertEquals("2021-08-18 10:00:00", $secondTransaction->getCreatedAt()->toDateTimeString());
     }
 }

@@ -2,25 +2,25 @@
 
 namespace YouCan\Pay\API\Exceptions;
 
+use RuntimeException;
 use Throwable;
 
-class BaseException extends \RuntimeException
+class BaseException extends RuntimeException
 {
-    /** @var string|null */
-    protected $response;
+    protected ?string $response;
 
     public function __construct(
         string $message,
-        string $response = null,
+        ?string $response = null,
         int $code = 0,
-        Throwable $previous = null
+        ?Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
 
         $this->response = $response;
     }
 
-    public function getResponse()
+    public function getResponse(): ?string
     {
         return $this->response;
     }

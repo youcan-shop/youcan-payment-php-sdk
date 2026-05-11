@@ -33,7 +33,7 @@ class Token
         return new self($attributes['id']);
     }
 
-    public function getPaymentURL($lang = 'en'): string
+    public function getPaymentURL(string $lang = 'en'): string
     {
         return sprintf(
             "%spayment-form/%s?lang=%s",
