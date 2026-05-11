@@ -29,7 +29,7 @@ class TokenEndpointTest extends BaseTestCase
         $tokenEndpoint = new TokenEndpoint($fakeAPIService);
         $token = $tokenEndpoint->create("123", "1000", "MAD", "123.123.123.123");
 
-        $this->assertEquals($token->getId(), "123");
+        $this->assertEquals("123", $token->getId());
     }
 
     public function test_validation_exception_amount_is_less_than_minimum()
@@ -39,8 +39,8 @@ class TokenEndpointTest extends BaseTestCase
         $response = new Response(
             422,
             [
-                    "success" => false,
-                    "message" => "the amount is less than minimum transaction amount"
+                "success" => false,
+                "message" => "the amount is less than minimum transaction amount"
             ]
         );
         $fakeAPIService = new FakeAPIService($response);
@@ -88,18 +88,10 @@ class TokenEndpointTest extends BaseTestCase
     {
         $this->expectException(ServerException::class);
 
-        $response = new Response(
-            500,
-            []
-        );
+        $response = new Response(500, []);
         $fakeAPIService = new FakeAPIService($response);
 
         $tokenEndpoint = new TokenEndpoint($fakeAPIService);
         $tokenEndpoint->create("123", "10", "MAD", "123.123.123.123");
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
     }
 }

@@ -2,23 +2,23 @@
 
 namespace YouCan\Pay\API;
 
-use YouCan\Pay\API\Exceptions\InvalidResponseException;
+use Exception;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapter;
 use YouCan\Pay\API\HTTPAdapter\HTTPAdapterPicker;
 
 final class APIService implements APIServiceInterface
 {
-    public static $isSandboxMode = false;
+    public static bool $isSandboxMode = false;
 
-    /** @var HTTPAdapter */
-    private $httpAdapter;
+    private HTTPAdapter $httpAdapter;
 
-    /** @var string */
-    private $privateKey;
+    private ?string $privateKey = null;
 
-    /** @var string */
-    private $publicKey;
+    private ?string $publicKey = null;
 
+    /**
+     * @throws Exception
+     */
     public function __construct(HTTPAdapterPicker $adapterPicker)
     {
         $this->httpAdapter = $adapterPicker->pickAdapter(self::$isSandboxMode);
@@ -30,23 +30,11 @@ final class APIService implements APIServiceInterface
         $this->publicKey = $publicKey;
     }
 
-    /**
-     * @param string $endpoint
-     * @param array $params
-     * @return Response
-     * @throws InvalidResponseException
-     */
     public function post(string $endpoint, array $params = []): Response
     {
-        return $this->getHttpAdapter()->post($endpoint,$params);
+        return $this->getHttpAdapter()->post($endpoint, $params);
     }
 
-    /**
-     * @param string $endpoint
-     * @param array $params
-     * @return Response
-     * @throws InvalidResponseException
-     */
     public function get(string $endpoint, array $params = []): Response
     {
         return $this->getHttpAdapter()->get($endpoint, $params);
@@ -59,7 +47,7 @@ final class APIService implements APIServiceInterface
 
     public static function setIsSandboxMode(bool $isSandboxMode): void
     {
-        static::$isSandboxMode = $isSandboxMode;
+        self::$isSandboxMode = $isSandboxMode;
     }
 
     public function getPublicKey(): ?string

@@ -2,42 +2,39 @@
 
 namespace YouCan\Pay\API\HTTPAdapter;
 
+use Exception;
+
 class HTTPAdapterPicker
 {
-    public function pickAdapter(bool $isSandboxMode)
+    /**
+     * @throws Exception
+     */
+    public function pickAdapter(bool $isSandboxMode): HTTPAdapter
     {
         if ($this->guzzleIsDetected()) {
             $guzzleVersion = $this->guzzleMajorVersionNumber();
 
-            if ($guzzleVersion && in_array($guzzleVersion, [6, 7])) {
+            if (in_array($guzzleVersion, [6, 7])) {
                 return new Guzzle67HTTPAdapter($isSandboxMode);
             }
 
-            throw new \Exception('unsupported guzzle version, we support 6 or 7');
+            throw new Exception('unsupported guzzle version, we support 6 or 7');
         }
 
         return new CurlHTTPAdapter($isSandboxMode);
     }
 
-    /**
-     * @return bool
-     */
-    private function guzzleIsDetected()
+    private function guzzleIsDetected(): bool
     {
         return interface_exists("\GuzzleHttp\ClientInterface");
     }
 
-    /**
-     * @return int|null
-     */
-    private function guzzleMajorVersionNumber()
+    private function guzzleMajorVersionNumber(): ?int
     {
-        // Guzzle 7
         if (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
             return (int) \GuzzleHttp\ClientInterface::MAJOR_VERSION;
         }
 
-        // Before Guzzle 7
         if (defined('\GuzzleHttp\ClientInterface::VERSION')) {
             return (int) \GuzzleHttp\ClientInterface::VERSION[0];
         }

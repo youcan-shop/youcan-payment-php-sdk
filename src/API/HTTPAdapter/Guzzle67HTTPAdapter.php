@@ -10,8 +10,7 @@ use YouCan\Pay\API\Response;
 
 class Guzzle67HTTPAdapter extends HTTPAdapter
 {
-    /** @var GuzzleClient */
-    private $httpClient;
+    private GuzzleClient $httpClient;
 
     public function __construct(bool $isSandboxMode, array $clientConfig = [])
     {
@@ -27,6 +26,9 @@ class Guzzle67HTTPAdapter extends HTTPAdapter
         ]));
     }
 
+    /**
+     * @throws InvalidResponseException
+     */
     public function request(string $method, string $endpoint, array $params = [], array $headers = []): Response
     {
         $response = $this->httpClient->request($method, $endpoint, [
@@ -42,6 +44,9 @@ class Guzzle67HTTPAdapter extends HTTPAdapter
         return new Response($response->getStatusCode(), is_array($responseBody) ? $responseBody : []);
     }
 
+    /**
+     * @throws InvalidResponseException
+     */
     private function assertSuccessResponsePayload(ResponseInterface $response): void
     {
         $responseBody = json_decode((string)$response->getBody(), true);

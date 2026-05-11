@@ -8,7 +8,7 @@ abstract class HTTPAdapter
 {
     public const BASE_APP_URL = 'https://youcanpay.com/';
 
-    private $isSandboxMode = false;
+    private bool $isSandboxMode;
 
     public function __construct(bool $isSandboxMode)
     {
@@ -17,13 +17,9 @@ abstract class HTTPAdapter
 
     protected function getBaseUrl(): string
     {
-        // Select proper environment
         $baseURL = getenv('YOUCAN_PAY_URL') ?: self::BASE_APP_URL;
 
-        // Check sandbox mode
-        $baseURL = sprintf("%s%s", $baseURL, $this->isSandboxMode ? 'sandbox/api/' : 'api/');
-
-        return $baseURL;
+        return sprintf("%s%s", $baseURL, $this->isSandboxMode ? 'sandbox/api/' : 'api/');
     }
 
     public function get(string $endpoint, array $params = [], array $headers = []): Response

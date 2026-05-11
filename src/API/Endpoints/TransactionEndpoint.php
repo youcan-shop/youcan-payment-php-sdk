@@ -26,7 +26,7 @@ class TransactionEndpoint extends Endpoint
     /**
      * @return Transaction[]
      */
-    public function list()
+    public function list(): array
     {
         $this->assertPrivateKeyIsSet();
 

@@ -2,19 +2,14 @@
 
 namespace YouCan\Pay\API\HTTPAdapter;
 
+use InvalidArgumentException;
 use YouCan\Pay\API\Exceptions\InvalidResponseException;
 use YouCan\Pay\API\Response;
 
 class CurlHTTPAdapter extends HTTPAdapter
 {
-    /**
-     * Default response timeout (in seconds).
-     */
     const DEFAULT_TIMEOUT = 10;
 
-    /**
-     * Default connect timeout (in seconds).
-     */
     const DEFAULT_CONNECT_TIMEOUT = 2;
 
     public function __construct(bool $isSandboxMode)
@@ -22,17 +17,20 @@ class CurlHTTPAdapter extends HTTPAdapter
         parent::__construct($isSandboxMode);
     }
 
-    protected function parseHeaders($headers)
+    protected function parseHeaders(array $headers): array
     {
         $result = [];
 
         foreach ($headers as $key => $value) {
-            $result[] = $key .': ' . $value;
+            $result[] = $key . ': ' . $value;
         }
 
         return $result;
     }
 
+    /**
+     * @throws InvalidResponseException
+     */
     public function request(string $method, string $endpoint, array $params = [], array $headers = []): Response
     {
         $headers["content-type"] = "application/json";
@@ -59,7 +57,7 @@ class CurlHTTPAdapter extends HTTPAdapter
             case 'get':
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid http method: ". $method);
+                throw new InvalidArgumentException("Invalid http method: " . $method);
         }
 
         $response = curl_exec($curl);
